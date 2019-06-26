@@ -10,7 +10,7 @@ import UIKit
 
 class TodoListViewController : UITableViewController {
     
-    let itemArray = ["find Mike", "Buy Eggs", "Destroy Demogorgon"]
+    var itemArray = ["find Mike", "Buy Eggs", "Destroy Demogorgon"]
     
 
     override func viewDidLoad() {
@@ -52,6 +52,43 @@ class TodoListViewController : UITableViewController {
         // CHANGE THE DEFAUKT GRAY WHEN THE CELL IS TOUCH
         tableView.deselectRow(at: indexPath, animated: true)
     }
+    
+    //MARK - ADD NEW ITEMS
+    // ADD BUTTON FOR ADD TASK TO THE LIST
+    @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
+        
+        var textField = UITextField()
+        
+        
+        //CREATE THE ALERT MESSAGE FOR ADD NEW ITEM
+        let alert = UIAlertController(title: "Add New Todoey Item", message: "", preferredStyle: .alert)
+        // THIS CREATE THE ACTION WHEN THE BUTTON IS PRESSED
+        let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
+            //WHAT WILL APPEN WHEN THE USER CLICK THE ADD BUTTON
+            //PRINT THE TEXT OF THE TEXT FIELD
+            //print(textField.text!)
+            
+            // THE SIMBOL ! WAS USED TO UNWRAP THE CONTENT AND THIS IS NOT NIL, BUT IF IS NIL THE CODE WAS: (textTield.text ?? "New item") WHERE NEW ITEM IS A DEFAULT TEXT
+            
+            // THIS LINE APPEND THE TEXT WRITEN ON THE TEXT FIELD
+            self.itemArray.append(textField.text!)
+            
+            // THIS LINE IS FOR THE TABLE RELOAD THE DATA AND DISPLAY THE TEXT WRITEN ON THE TEXT FIELD
+            self.tableView.reloadData()
+        }
+        // THIS CREATE A TEXT FIELD IN THE ALERT MESSAGE
+        alert.addTextField { (alertTextField) in
+            alertTextField.placeholder = "Create New Item"
+            textField = alertTextField
+        }
+        
+        alert.addAction(action)
+        
+        present(alert, animated: true, completion: nil)
+        
+    }
+    
+    
 
 }
 
