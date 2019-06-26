@@ -12,11 +12,16 @@ class TodoListViewController : UITableViewController {
     
     var itemArray = ["find Mike", "Buy Eggs", "Destroy Demogorgon"]
     
+    // THIS CONSTANT IS CREATED FOR SAVE THE DATA WHEN THE APP IS CLOSED AND MAKE THIS PERSISTANT
+    let defaults = UserDefaults.standard
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        if let items = defaults.array(forKey: "TodoListArray") as? [String]{
+            itemArray = items
+        }
     }
     
     //MARK - Tableview Datasource Methods
@@ -72,6 +77,9 @@ class TodoListViewController : UITableViewController {
             
             // THIS LINE APPEND THE TEXT WRITEN ON THE TEXT FIELD
             self.itemArray.append(textField.text!)
+            
+            //THIS IS USED FOR SHOW THE USER THE PERSISTENT DATA - SEND TO THE CONSTANT DEFAULTS THE DATA
+            self.defaults.set(self.itemArray, forKey: "TodoListArray")
             
             // THIS LINE IS FOR THE TABLE RELOAD THE DATA AND DISPLAY THE TEXT WRITEN ON THE TEXT FIELD
             self.tableView.reloadData()
